@@ -8,7 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./NavBar.scss";
 
 function NavBar() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <>
       <div className="navbar__container">

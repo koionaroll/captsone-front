@@ -1,5 +1,4 @@
 import {React, useState} from 'react'
-// const mtg = require("mtgsdk");
 
 function CreateEditPage() {
   const [value, setValue] = useState("");
@@ -20,10 +19,6 @@ function CreateEditPage() {
       handleSubmit();
     }
   };
-
-  // mtg.card.all({ name: "Experiment One" }).on("data", (card) => {
-  //   res.json({name:card.name, image:card.imageUrl});
-  // });
 
   return (
     <>
