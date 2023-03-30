@@ -1,0 +1,14 @@
+.navbar{
+
+    &__container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    &__icon{
+    width:3rem;
+    height:3rem;
+    }
+    
+}
