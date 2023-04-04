@@ -1,14 +1,18 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
+import Card from "../../components/Card/Card"
 import axios from "axios";
 
 function CreateEditPage() {
   const [list, setList] = useState([]);
   const [value, setValue] = useState("");
-  const [quant, setQuant] = useState(1);
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+
+  // useEffect(()=>{
+  //   setNum(num)
+  // }, [num])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,12 +23,23 @@ function CreateEditPage() {
           id: res.data.id,
           name: res.data.name,
           img: res.data.img,
-          quantity: quant,
+          quantity: 1
         },
       ]);
     });
     setValue("");
   };
+  const handleAddCard = (quant, cardId) => {
+    // find the card id
+    let card = list.find(x => x.id === cardId)
+    // update the quant of card object to be quant
+    card.quantity = quant
+  }
+
+  const handleSubCard = (quant, cardId) => {
+    let card = list.find(x => x.id === cardId)
+    card.quantity = quant
+  }
 
   const handleKeypress = (e) => {
     // 13 keycode is enter key
@@ -38,22 +53,16 @@ function CreateEditPage() {
       return currentList.filter(list => list.id !== id)
     });
   };
-
-  const handleAdd = (e) => {
-    setQuant(+1);
-    console.log(quant)
-  };
-
-  const handleSub = (e) => {
-    setQuant(quant - 1);
-    if (quant === 0) {
-      setQuant(0);
+  const handleSave = (e) => {
+    e.preventDefault();
+    axios.post(`http://localhost:8080/decks/}`).then((req) => {
     }
-  };
-  const handleSave = (e) => {};
-
+    
+  
+  )};
   return (
     <>
+
       <p>SearchEdit Page</p>
       <form>
         <input
@@ -70,18 +79,7 @@ function CreateEditPage() {
       {list.map((element) => {
         return (
           <div key={element.id}>
-            <p>----------------------</p>
-            <p>{element.id}</p>
-            <p>{element.name}</p>
-            <p>{element.quantity}x</p>
-            <p>{element.img}</p>
-            <button onClick={()=>handleAdd(element.quantity)} type="submit">
-              +
-            </button>
-            <button onClick={handleSub} type="submit">
-              -
-            </button>
-            <button onClick={()=> handleDel(element.id)}>Delete</button>
+            <Card element = {element} handleDel = {handleDel} handleAddCard = {handleAddCard} handleSubCard={handleSubCard}/>
           </div>
         );
       })}
@@ -92,5 +90,4 @@ function CreateEditPage() {
     </>
   );
 }
-
 export default CreateEditPage;
