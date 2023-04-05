@@ -1,0 +1,16 @@
+.deck {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: fit-content;
+        height: 144px;
+        &--big{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding: 1rem;
+            gap:1rem
+        }
+    }
+}

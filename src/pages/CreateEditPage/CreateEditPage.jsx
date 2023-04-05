@@ -1,5 +1,5 @@
-import { React, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { React, useState, useRef, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Card from "../../components/Card/Card";
 import "./CreateEditPage.scss";
 import axios from "axios";
@@ -8,14 +8,25 @@ function CreateEditPage() {
   const [list, setList] = useState([]);
   const [value, setValue] = useState("");
   const [name, setName] = useState("");
+  const [data, setData] = useState([]);
 
+  const { deckID } = useParams();
   const navigate = useNavigate();
   const searchInput = useRef(null);
+
+  useEffect(() => {
+    if (deckID) {
+      axios.get(`http://localhost:8080/decks/${deckID}`).then((res) => {
+        setData(res.data);
+        setList(res.data.cardlist)
+        setName(res.data.deckname)
+      });
+    }
+  }, []);
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
-
   const handleChangeName = (e) => {
     setName(e.target.value);
   };
@@ -75,19 +86,32 @@ function CreateEditPage() {
 
   const handleSave = (e) => {
     e.preventDefault();
-    console.log(list)
-    axios
-      .post(`http://localhost:8080/decks/decklist`, {
-        deckname: name,
-        cardlist: list,
+    if(deckID){
+      axios.patch(`http://localhost:8080/decks/${deckID}`,{
+        name: name,
+        list: list,
       })
       .then(() => {
-        alert("DeckList Uploaded");
+        alert("DeckList Save");
         navigate("/");
       })
       .catch((err) => {
         console.log(err);
       });
+    }else{
+      axios
+      .post(`http://localhost:8080/decks/decklist`, {
+          deckname: name,
+          cardlist: list,
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+setTimeout(() => {
+  
+  navigate("/");
+}, 250);    
   };
 
   return (
@@ -96,9 +120,9 @@ function CreateEditPage() {
         <input
           className="input__name"
           ref={searchInput}
-          name={name}
+          value={name}
           onChange={handleChangeName}
-          placeholder="Enter Deck Name"
+          placeholder={"Enter Deck Name"}
         />
       </form>
       <form onSubmit={handleSubmit}>

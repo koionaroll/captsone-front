@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ViewPage />} />
         <Route path="/create" element={<CreateEditPage />} />
-        <Route path="/edit" element={<CreateEditPage />} />
+        <Route path="/edit/:deckID" element={<CreateEditPage />} />
         <Route path="/playtest" element={<PlaytestPage />} />
         <Route path="/credits" element={<Credits />} />
       </Routes>
