@@ -1,0 +1,29 @@
+.card {
+    display: flex;
+    flex-direction: column;
+
+    &__quantity {
+        display: flex;
+        gap: 0.5rem
+    }
+
+    &__img {
+        margin: 1rem 0;
+        width: 11rem;
+        &--hide {
+            display: none;
+        }
+    }
+
+    &__btn {
+        padding: 0.25rem;
+        width: 3.75rem;
+
+        &__container {
+            display: unset;
+            &--hide {
+                display: none;
+            }
+        }
+    }
+}

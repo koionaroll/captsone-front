@@ -1,85 +1,123 @@
-import { React, useEffect, useState } from "react";
-import Card from "../../components/Card/Card"
+import { React, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import Card from "../../components/Card/Card";
+import "./CreateEditPage.scss";
 import axios from "axios";
 
 function CreateEditPage() {
   const [list, setList] = useState([]);
   const [value, setValue] = useState("");
+  const [name, setName] = useState("");
+
+  const navigate = useNavigate();
+  const searchInput = useRef(null);
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
-  // useEffect(()=>{
-  //   setNum(num)
-  // }, [num])
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     axios.get(`http://localhost:8080/singles/${value}`).then((res) => {
-      setList((previous) => [
-        ...previous,
-        {
-          id: res.data.id,
-          name: res.data.name,
-          img: res.data.img,
-          quantity: 1
-        },
-      ]);
+      setList((previous) => {
+        previous.filter((element) => element.id !== res.data.id);
+        return [
+          ...previous,
+          {
+            id: res.data.id,
+            name: res.data.name,
+            img: res.data.img,
+            quantity: 1,
+          },
+        ];
+      });
     });
     setValue("");
   };
-  const handleAddCard = (quant, cardId) => {
-    // find the card id
-    let card = list.find(x => x.id === cardId)
-    // update the quant of card object to be quant
-    card.quantity = quant
-  }
 
-  const handleSubCard = (quant, cardId) => {
-    let card = list.find(x => x.id === cardId)
-    card.quantity = quant
-  }
-
-  const handleKeypress = (e) => {
-    // 13 keycode is enter key
-    if (e.keyCode === 13) {
-      handleSubmit();
-    }
+  const handleSubmitName = (e) => {
+    e.preventDefault();
+    searchInput.current.blur();
   };
 
-  const handleDel = id => {
-    setList(currentList => {
-      return currentList.filter(list => list.id !== id)
+  const handleAddCard = (cardId) => {
+    setList(
+      list.map((mapCard) => {
+        if (mapCard.id === cardId) {
+          mapCard.quantity += 1;
+        }
+        return mapCard;
+      })
+    );
+  };
+
+  const handleSubCard = (cardId) => {
+    setList(
+      list.map((mapCard) => {
+        if (mapCard.id === cardId) {
+          mapCard.quantity -= 1;
+        }
+        return mapCard;
+      })
+    );
+  };
+
+  const handleDel = (id) => {
+    setList((currentList) => {
+      return currentList.filter((list) => list.id !== id);
     });
   };
+
   const handleSave = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:8080/decks/}`).then((req) => {
-    }
-    
-  
-  )};
+    console.log(list)
+    axios
+      .post(`http://localhost:8080/decks/decklist`, {
+        deckname: name,
+        cardlist: list,
+      })
+      .then(() => {
+        alert("DeckList Uploaded");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
-
-      <p>SearchEdit Page</p>
-      <form>
+      <form onSubmit={handleSubmitName}>
+        <input
+          className="input__name"
+          ref={searchInput}
+          name={name}
+          onChange={handleChangeName}
+          placeholder="Enter Deck Name"
+        />
+      </form>
+      <form onSubmit={handleSubmit}>
         <input
           value={value}
           onChange={handleChange}
-          onKeyPress={handleKeypress}
           placeholder="Search Card"
         />
-        <button onClick={handleSubmit} type="submit">
-          Search
-        </button>
       </form>
       <p>=========================</p>
       {list.map((element) => {
         return (
           <div key={element.id}>
-            <Card element = {element} handleDel = {handleDel} handleAddCard = {handleAddCard} handleSubCard={handleSubCard}/>
+            <Card
+              element={element}
+              handleDel={handleDel}
+              handleAddCard={handleAddCard}
+              handleSubCard={handleSubCard}
+            />
           </div>
         );
       })}
