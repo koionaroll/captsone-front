@@ -3,6 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import Card from "../../components/Card/Card";
 import "./CreateEditPage.scss";
 import axios from "axios";
+import SuggBar from "../../components/SuggBar/SuggBar";
+import TextInput from "react-autocomplete-input";
+import "react-autocomplete-input/dist/bundle.css";
 
 function CreateEditPage() {
   const [list, setList] = useState([]);
@@ -10,6 +13,7 @@ function CreateEditPage() {
   const [name, setName] = useState("");
   const [data, setData] = useState([]);
   const [sugg, setSugg] = useState([]);
+  const [sum, setSum] = useState(0);
 
   const { deckID } = useParams();
   const navigate = useNavigate();
@@ -25,16 +29,22 @@ function CreateEditPage() {
     }
   }, [deckID]);
 
+  useEffect(() => {
+    setSum(list.map((e) => e.quantity).reduce((a, b) => a + b, 0));
+  }, [list]);
+
   const handleChange = (e) => {
-    setValue(e.target.value);
-
-    axios.get(`http://localhost:8080/sugg/${value}`).then((res) => {
-      setSugg(res.data.data)
-      console.log(res.data.data)
-    }).catch((err) => {
-      return
+    setValue(() => {
+      axios
+        .get(`http://localhost:8080/sugg/${e}`)
+        .then((res) => {
+          setSugg(res.data.data);
+        })
+        .catch((err) => {
+          return;
+        });
+      return e;
     });
-
   };
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -42,10 +52,11 @@ function CreateEditPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     axios.get(`http://localhost:8080/singles/${value}`).then((res) => {
-      if(list.find((card) => card.id === res.data.id)){
-        handleAddCard(res.data.id)
-        return
+      if (list.find((card) => card.id === res.data.id)) {
+        handleAddCard(res.data.id);
+        return;
       }
       setList((previous) => {
         previous.filter((element) => element.id !== res.data.id);
@@ -93,7 +104,7 @@ function CreateEditPage() {
 
     // if(deleteIndex >= 0) {
     //   newList.splice(deleteIndex, 1);
-    // } 
+    // }
 
     // setList(
     //   newList
@@ -147,7 +158,6 @@ function CreateEditPage() {
       navigate("/");
     }, 250);
   };
-
   return (
     <>
       <form onSubmit={handleSubmitName}>
@@ -159,13 +169,20 @@ function CreateEditPage() {
           placeholder={"Enter Deck Name"}
         />
       </form>
+      <div className="input__container">
+
       <form onSubmit={handleSubmit}>
-        <input
+        <TextInput
+          Component="input"
+          trigger={[""]}
+          options={sugg}
           value={value}
           onChange={handleChange}
           placeholder="Search Card"
         />
       </form>
+      <p>{sum} cards</p>
+      </div>
       <p>=========================</p>
       {list.map((element) => {
         return (
