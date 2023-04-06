@@ -9,6 +9,7 @@ function CreateEditPage() {
   const [value, setValue] = useState("");
   const [name, setName] = useState("");
   const [data, setData] = useState([]);
+  const [sugg, setSugg] = useState([]);
 
   const { deckID } = useParams();
   const navigate = useNavigate();
@@ -18,14 +19,22 @@ function CreateEditPage() {
     if (deckID) {
       axios.get(`http://localhost:8080/decks/${deckID}`).then((res) => {
         setData(res.data);
-        setList(res.data.cardlist)
-        setName(res.data.deckname)
+        setList(res.data.cardlist);
+        setName(res.data.deckname);
       });
     }
-  }, []);
+  }, [deckID]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
+
+    axios.get(`http://localhost:8080/sugg/${value}`).then((res) => {
+      setSugg(res.data.data)
+      console.log(res.data.data)
+    }).catch((err) => {
+      return
+    });
+
   };
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -33,8 +42,11 @@ function CreateEditPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     axios.get(`http://localhost:8080/singles/${value}`).then((res) => {
+      if(list.find((card) => card.id === res.data.id)){
+        handleAddCard(res.data.id)
+        return
+      }
       setList((previous) => {
         previous.filter((element) => element.id !== res.data.id);
         return [
@@ -68,10 +80,31 @@ function CreateEditPage() {
   };
 
   const handleSubCard = (cardId) => {
+    // let deleteIndex = -1;
+    // const newList = list.map((mapCard, i) => {
+    //   if (mapCard.id === cardId) {
+    //     mapCard.quantity -= 1;
+    //     if (mapCard.quantity === 0) {
+    //       deleteIndex = i
+    //     }
+    //   }
+    //   return mapCard;
+    // })
+
+    // if(deleteIndex >= 0) {
+    //   newList.splice(deleteIndex, 1);
+    // } 
+
+    // setList(
+    //   newList
+    // )
     setList(
       list.map((mapCard) => {
         if (mapCard.id === cardId) {
           mapCard.quantity -= 1;
+          if (mapCard.quantity === 0) {
+            setTimeout(() => handleDel(cardId), 0.00001);
+          }
         }
         return mapCard;
       })
@@ -80,27 +113,29 @@ function CreateEditPage() {
 
   const handleDel = (id) => {
     setList((currentList) => {
-      return currentList.filter((list) => list.id !== id);
+      const filtered = currentList.filter((list) => list.id !== id);
+      return filtered;
     });
   };
 
   const handleSave = (e) => {
     e.preventDefault();
-    if(deckID){
-      axios.patch(`http://localhost:8080/decks/${deckID}`,{
-        name: name,
-        list: list,
-      })
-      .then(() => {
-        alert("DeckList Save");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }else{
+    if (deckID) {
       axios
-      .post(`http://localhost:8080/decks/decklist`, {
+        .patch(`http://localhost:8080/decks/${deckID}`, {
+          name: name,
+          list: list,
+        })
+        .then(() => {
+          alert("DeckList Save");
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .post(`http://localhost:8080/decks/decklist`, {
           deckname: name,
           cardlist: list,
         })
@@ -108,10 +143,9 @@ function CreateEditPage() {
           console.log(err);
         });
     }
-setTimeout(() => {
-  
-  navigate("/");
-}, 250);    
+    setTimeout(() => {
+      navigate("/");
+    }, 250);
   };
 
   return (

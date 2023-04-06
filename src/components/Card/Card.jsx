@@ -8,16 +8,10 @@ function Card({ element, handleDel, handleAddCard, handleSubCard }) {
 
   const handleAdd = (e) => {
     handleAddCard(element.id);
-    setQuant(quant + 1);
   };
 
   const handleSub = (e) => {
     handleSubCard(element.id);
-    setQuant(quant - 1);
-
-    if (quant === 1) {
-      handleDel(element.id);
-    }
   };
 
   return (
@@ -26,7 +20,7 @@ function Card({ element, handleDel, handleAddCard, handleSubCard }) {
         <div className="card__quantity">
           <p onClick={() => {
               setIsClicked(!isClicked);
-            }}>{quant}x</p>
+            }}>{element.quantity}x</p>
           <p
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
