@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Card from "../../components/Card/Card";
 import "./CreateEditPage.scss";
 import axios from "axios";
-import SuggBar from "../../components/SuggBar/SuggBar";
 import TextInput from "react-autocomplete-input";
 import "react-autocomplete-input/dist/bundle.css";
 
@@ -156,7 +155,7 @@ function CreateEditPage() {
     }
     setTimeout(() => {
       navigate("/");
-    }, 250);
+    }, 300);
   };
   return (
     <>
@@ -170,7 +169,6 @@ function CreateEditPage() {
         />
       </form>
       <div className="input__container">
-
       <form onSubmit={handleSubmit}>
         <TextInput
           Component="input"
