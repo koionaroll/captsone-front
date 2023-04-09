@@ -1,3 +1,7 @@
+.page__layout{
+ margin-top: 76px;
+}
+
 .input{
     &__name{
 
@@ -14,12 +18,3 @@
     }
 }
 
-$font-primary: #03045eff;
-$font-secondary: #023e8aff;
-$font-light: #0077b6ff;
-$button-primary: #0096c7ff;
-$button-secondary: #00b4d8ff;
-$background: #48cae4ff;
-$background-primary: #90e0efff;
-$background-secondary: #ade8f4ff;
-$background-light: #caf0f8ff;

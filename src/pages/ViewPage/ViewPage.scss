@@ -1,4 +1,9 @@
 .deck {
+    &__title{
+        padding: 0.5rem;
+        font-size: 1.5rem;
+        margin-top: 76px;
+    }
     &__container {
         display: flex;
         flex-direction: column;
@@ -7,10 +12,10 @@
         height: 144px;
         &--big{
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             padding: 1rem;
-            gap:1rem
+            gap: 11rem;
         }
     }
 }

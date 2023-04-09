@@ -65,6 +65,7 @@ function CreateEditPage() {
             id: res.data.id,
             name: res.data.name,
             img: res.data.img,
+            type:res.data.type,
             quantity: 1,
           },
         ];
@@ -159,6 +160,8 @@ function CreateEditPage() {
   };
   return (
     <>
+    <div className="page__layout">
+
       <form onSubmit={handleSubmitName}>
         <input
           className="input__name"
@@ -177,7 +180,7 @@ function CreateEditPage() {
           value={value}
           onChange={handleChange}
           placeholder="Search Card"
-        />
+          />
       </form>
       <p>{sum} cards</p>
       </div>
@@ -190,7 +193,7 @@ function CreateEditPage() {
               handleDel={handleDel}
               handleAddCard={handleAddCard}
               handleSubCard={handleSubCard}
-            />
+              />
           </div>
         );
       })}
@@ -198,6 +201,7 @@ function CreateEditPage() {
       <button onClick={handleSave} type="submit">
         Save
       </button>
+      </div>
     </>
   );
 }

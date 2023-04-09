@@ -1,19 +1,87 @@
 .deck {
-    &__folder {
-        width: 5.5rem;
-    }
+  &__folder {
+    width: 2rem;
 
-    &__name {
-        font-weight: 700;
-        width: fit-content;
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding-top: 0.75rem;
+    width: fit-content;
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    width: fit-content;
+  }
+
+  &__del {
+    &--hide {
+      display: none;
     }
-    &__date {
-        font-size: 0.75rem;
-        width: fit-content;
-    }
-    &__del{
-        &--hide{
-            display:none;
-        }
-    }
+  }
+  &__align{
+    display: grid;
+    place-items: center;
+  }
+}
+
+
+.card-groups,
+.card-group,
+.card {
+  aspect-ratio: 5 / 7;
+}
+
+.card-groups,
+.card-group,
+.big-card {
+  width: 10rem;
+}
+
+.card-group {
+  position: absolute;
+  transition: transform 400ms ease;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.05);
+  position: absolute;
+  transition: transform 800ms cubic-bezier(.05, .43, .25, .95);
+  background-position: center;
+  background-size: cover;
+}
+
+.big-card {
+  border-radius: 1vmin;
+}
+
+
+.big-card:nth-child(1) {
+  transform: translateX(-10%) rotate(-1deg);
+}
+
+.big-card:nth-child(2) {
+  transform: rotate(2deg);
+}
+
+.big-card:nth-child(3) {
+  transform: translateX(-6%) rotate(-3deg);
+}
+
+.card-group:hover>.card {
+  box-shadow: -2vmin 2vmin 3vmin rgba(0, 0, 0, 0.4);
+}
+
+.card-group:hover>.big-card:nth-child(1) {
+  transform: translate(-75%, 16%) rotate(-24deg);
+}
+
+.card-group:hover>.big-card:nth-child(2) {
+  transform: translate(-25%, 8%) rotate(-8deg);
+}
+
+.card-group:hover>.big-card:nth-child(3) {
+  transform: translate(25%, 8%) rotate(8deg);
 }

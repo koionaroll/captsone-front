@@ -13,6 +13,8 @@ function ViewPage() {
   }, []);
 
   return (
+    <>
+    <h1 className="deck__title">Welcome Back User</h1>
     <div className="deck__container--big">
       {data.map((element) => {
         return (
@@ -22,6 +24,7 @@ function ViewPage() {
         );
       })}
     </div>
+    </>
   );
 }
 

@@ -1,8 +1,8 @@
 import React from "react";
-import plus from "../../assets/icons/plus.svg";
-import bulb from "../../assets/icons/bulb.svg";
-import back from "../../assets/icons/back.svg";
-import info from "../../assets/icons/info.svg";
+import {ReactComponent as Plus} from "../../assets/icons/plus.svg";
+import {ReactComponent as Bulb} from "../../assets/icons/bulb.svg";
+import {ReactComponent as Back} from "../../assets/icons/back.svg";
+import {ReactComponent as Info} from "../../assets/icons/info.svg";
 // import edit from "../../assets/icons/edit.svg";
 import { useNavigate, Link } from "react-router-dom";
 import "./NavBar.scss";
@@ -13,18 +13,18 @@ function NavBar() {
     <>
       <div className="navbar__container">
         <Link to="/">
-          <img className="navbar__icon" src={back} />
+          <Back className="navbar__icon" />
         </Link>
         <div>
           <Link to="/create">
-            <img className="navbar__icon" src={plus} />
+            <Plus className="navbar__icon"/>
           </Link>
-          <Link to="/playtest">
-            <img className="navbar__icon" src={bulb} />
-          </Link>
+          {/* <Link to="/playtest">
+            <Bulb className="navbar__icon"/>
+          </Link> */}
         </div>
         <Link to="/credits">
-          <img className="navbar__icon" src={info} />
+          <Info className="navbar__icon"/>
         </Link>
       </div>
     </>
