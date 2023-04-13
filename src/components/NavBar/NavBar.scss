@@ -1,10 +1,12 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
 
 .navbar{
 
     &__container{
         padding: 1rem 1rem 0.5rem;
         background-color: $background-two;
+        border-bottom: 2px solid $primary-one;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -12,14 +14,95 @@
         top: 0;
         z-index: 1;
         width: 100%;
+        @include desktop{
+           padding: 1rem clamp(7rem,10vw, 10rem) 0.5rem;
+        }
     }
 
     &__icon{
-    width:3rem;
-    height:3rem;
-    stroke: white;
-    
-    fill: $background-two;
+        background-color: $background-two;
+        width:3rem;
+        height:3rem;
+        stroke: $primary-three;
+        fill:$background-two;
+        cursor: pointer;
     }
     
+}
+
+.bg{
+    background-color: $background-two;
+}
+
+.modal{
+
+    &-content{
+        display: flex;
+        flex-direction: column;
+        font-size: 1.25rem;
+        gap: 1rem;
+        width: 30rem;
+        height: 30rem;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        border:2px solid $primary-one;;
+        background-color: $background-two;
+        &-icon{
+            cursor: pointer;
+            width: 2.7rem;
+            height: 3rem;
+            object-fit: cover;
+            &1{
+                cursor: pointer;
+                width: 4rem;
+                height: 3rem;
+                object-fit: cover;
+            }
+            
+            &-container{
+                gap:1rem;
+                display: flex;
+                flex-direction: row;
+            }
+        }
+    }
+
+    &-close{
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 1rem;
+        right: 1rem;
+        font-size: 3rem;
+        border-radius: 50%;
+        height: 3rem;
+        width: 3rem;
+        border: 0.3rem solid black;
+        background-color: $background-two;
+
+        @include desktop{
+            right: 10rem;
+        }
+    }
+    
+    &-overlay{
+        z-index: 3;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.mtga-hide{
+    display: none;
+}
+.mtga{
+    display: unset;
 }

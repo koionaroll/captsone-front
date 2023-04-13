@@ -1,4 +1,5 @@
 @import "./styles/fonts";
+@import "./styles/variables";
 
 *{
     box-sizing: border-box;
@@ -6,4 +7,8 @@
     padding: 0;
     margin: 0;
     font-family: "Helmet Neue";
+    
+}
+html{
+    background-color: $background-one;
 }

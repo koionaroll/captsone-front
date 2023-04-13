@@ -1,29 +1,70 @@
-.deck {
-  &__folder {
-    width: 2rem;
+@import "../../styles/variables";
+@import "../../styles/mixins";
 
-  }
+.deck {
 
   &__name {
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     padding-top: 0.75rem;
+    color: $primary-three;
     width: fit-content;
+    background-color: $background-two;
+    cursor: pointer;
+    &:hover{
+      text-decoration: underline;
+    }
+
   }
+  
+      &__format {
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
 
   &__date {
-    font-size: 0.75rem;
+    color:$primary-one;
+    font-size: 1.2rem;
     width: fit-content;
-  }
+    margin-bottom: 0.5rem;
+    background-color: $background-two;
 
+    cursor: pointer;
+    &__align {
+      padding-top: 0.5rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: $background-two;
+      
+      @include tablet{
+        justify-content: flex-start;
+      }
+    }
+  }
+  
   &__del {
+    margin-left: 8rem;
+    position: absolute;
+    background-color: $background-two;
+
+    z-index: 0;
     &--hide {
       display: none;
     }
+
   }
-  &__align{
-    display: grid;
-    place-items: center;
+
+  &__align {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background-color: $background-two;
+    border: 2px $primary-one solid;
+    padding: 1rem 2.5rem 1rem;
+    width: 16.25rem;
+    height: 21.875rem;
   }
 }
 
@@ -31,6 +72,8 @@
 .card-groups,
 .card-group,
 .card {
+  background-color: $background-two;
+  padding-left: 0.5rem;
   aspect-ratio: 5 / 7;
 }
 
@@ -75,13 +118,13 @@
 }
 
 .card-group:hover>.big-card:nth-child(1) {
-  transform: translate(-75%, 16%) rotate(-24deg);
+  transform: translate(-50%, 16%) rotate(-20deg);
 }
 
 .card-group:hover>.big-card:nth-child(2) {
-  transform: translate(-25%, 8%) rotate(-8deg);
+  transform: translate(-10%, 8%) rotate(-4deg);
 }
 
 .card-group:hover>.big-card:nth-child(3) {
-  transform: translate(25%, 8%) rotate(8deg);
+  transform: translate(40%, 8%) rotate(8deg);
 }

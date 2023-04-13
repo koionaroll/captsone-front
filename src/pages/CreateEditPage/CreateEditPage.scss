@@ -1,20 +1,140 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
 .page__layout{
  margin-top: 76px;
 }
 
 .input{
-    &__name{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
 
+    &__label{
+        font-size: 1.5rem;
+        line-height: 1.7rem;
+        &__container{
+            display: flex;
+            align-items: center;
+            gap:1rem;
+        }
+    }
+    
+    &__icon{
+        width: 2rem;
+     
+    }
+
+    &__trash{
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    &__name{
+        background-color: $background-one;
         border: none;
-        font-size: 2rem;
+        font-size: 3rem;
         outline: none;
         padding: 1rem 0;
+        width: 80vw;
+        overflow: visible;
+
+        &__container{
+            display: flex;
+            gap: 1rem;
+        }
+    }
+
+    &__dropdown{
+        width: 100%;
+        font-size: 1.3rem;
+        @include tablet{
+            margin-left: 1rem;
+            width: 30%;
+        }
+    }
+    &__search{
+        width: 100%;
+        font-size: 1.7rem;
+        height: 3rem;
+        padding: 1rem;
+    }
+    
+    &__check{
+      width: 1.5rem;
+      height: 1.5rem;
+      &__container{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
     }
 
     &__container{
+        padding: 0 0 1rem;
         display: flex;
-        gap: 1rem;
-        align-items: center;
+       flex-direction: column;
+        gap: 1.5rem;
+        &--hide{
+            display: none;
+        }
     }
 }
 
+.btnS{
+    width:100%;
+
+    @include tablet{
+        width:10rem;
+        margin-left: auto;
+    }
+}
+.btnH{
+    width: 3rem;
+    height: 5rem;
+    cursor: pointer;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    &:hover{
+        transition-duration: 200ms;
+        width: 4rem;
+    }
+    &-active{
+        @extend .btnH;
+        transform: rotate(180deg)
+    }
+}
+
+.btn__wrapper{
+    padding: 1rem;
+    display: flex;
+}
+
+.list{
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    border: 2px solid $primary-one;
+    border-bottom: 2px solid $primary-one;
+    background-color: $background-two;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 0 1rem;
+    @include tablet{
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    &__label{
+        font-size: 2rem;
+        border-bottom: 2px solid $primary-one;
+        width: fit-content;
+        padding-bottom: 0.5rem;
+        
+        margin-bottom: 1rem;
+
+    }
+}

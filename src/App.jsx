@@ -4,7 +4,6 @@ import ViewPage from "./pages/ViewPage/ViewPage";
 import CreateEditPage from "./pages/CreateEditPage/CreateEditPage";
 import PlaytestPage from "./pages/PlaytestPage/PlaytestPage";
 import NavBar from "./components/NavBar/NavBar";
-import Credits from "./pages/Credits/Credits.jsx"
 
 function App() {
   return (
@@ -15,7 +14,6 @@ function App() {
         <Route path="/create" element={<CreateEditPage />} />
         <Route path="/edit/:deckID" element={<CreateEditPage />} />
         <Route path="/playtest" element={<PlaytestPage />} />
-        <Route path="/credits" element={<Credits />} />
       </Routes>
     </BrowserRouter>
   );
